@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  db:
+    image: 'postgres:14-alpine'
+    volumes:
+      - ./tmp/postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
