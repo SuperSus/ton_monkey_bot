@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Telegram
+# module Telegram
   class WebhookController < Telegram::Bot::UpdatesController
     include Telegram::Bot::UpdatesController::MessageContext
     include Telegram::Bot::UpdatesController::CallbackQueryContext
@@ -91,4 +91,4 @@ module Telegram
       }
     end
   end
-end
+# end

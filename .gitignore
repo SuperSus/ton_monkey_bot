@@ -33,4 +33,4 @@
 /config/credentials/development.key
 
 /config/credentials/production.key
-.do_user_data.sh
+do_user_data.sh
