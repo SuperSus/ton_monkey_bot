@@ -17,7 +17,8 @@ class WebhookController < Telegram::Bot::UpdatesController
     instruction: "\xF0\x9F\x93\x96",
     search: "\xF0\x9F\x94\x8D",
     settings: "\xF0\x9F\x94\xA7",
-    link_arrow: "\xE2\x86\x97"
+    link_arrow: "\xE2\x86\x97",
+    map: "\xF0\x9F\x9A\x8F",
   }.freeze
 
   MAIN_MENU = {
@@ -25,6 +26,8 @@ class WebhookController < Telegram::Bot::UpdatesController
     settings:   "Настройки #{ICONS[:settings]}",
     references: "Ссылки #{ICONS[:link_arrow]}",
     faq:        "FAQ #{ICONS[:instruction]}",
+    roadmap:    "Roadmap #{ICONS[:map]}",
+    minter:     "Minter #{ICONS[:credit_card]}"
   }
 
   use_session!
@@ -42,7 +45,7 @@ class WebhookController < Telegram::Bot::UpdatesController
   #   callback_query(data)
 
   def start!(_word = nil, *_other_words)
-    respond :message, text: greeting
+    respond_with :message, text: greeting
     if captcha_resolved? # or current_user.present?
       save_keyboard_context
     else
@@ -61,9 +64,12 @@ class WebhookController < Telegram::Bot::UpdatesController
       respond :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Cсылки'
     when /faq/i
       respond :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'FAQ'
+    when /roadmap/i
+    when /minter/i
+      respond :message, text: "Бот для минта\n\n@minter111_bot"
     else
-      respond :message, text: 'хз'
     end
+  ensure
     save_keyboard_context
   end
 
@@ -105,7 +111,11 @@ class WebhookController < Telegram::Bot::UpdatesController
   def main_menu
     buttons = [
       [MAIN_MENU[:history], MAIN_MENU[:references]],
-      [MAIN_MENU[:settings], { text: MAIN_MENU[:faq], web_app: { url: 'https://supersus.github.io/monkey_bot_faq/' } }],
+      [ MAIN_MENU[:settings], MAIN_MENU[:minter] ],
+      [
+        { text: MAIN_MENU[:faq], web_app: { url: 'https://supersus.github.io/monkey_bot_faq/' } },
+        { text: MAIN_MENU[:roadmap], web_app: { url: 'https://monkeybusiness.yummiwannaplay.com/roadmap' } }
+      ]
     ]
     {
       keyboard: buttons,
