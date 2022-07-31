@@ -55,7 +55,6 @@ group :development, :test do
   gem "rspec-its"
   gem "spring-commands-rspec"
   gem "pry"
-  gem "pry-byebug"
   gem "pry-nav"
   gem "pry-doc"
   gem "pry-rails"
