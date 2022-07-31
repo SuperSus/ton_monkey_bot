@@ -4,6 +4,7 @@ class WebhookController < Telegram::Bot::UpdatesController
   include Telegram::Bot::UpdatesController::MessageContext
   include Telegram::Bot::UpdatesController::CallbackQueryContext
   include Telegram::Bot::UpdatesController::Session
+  include UserMethods
 
   self.session_store = :file_store, Rails.root.join('tmp/cache')
 
@@ -46,10 +47,10 @@ class WebhookController < Telegram::Bot::UpdatesController
 
   def start!(_word = nil, *_other_words)
     respond_with :message, text: greeting
-    if captcha_resolved? # or current_user.present?
+    if current_user.present?
       save_keyboard_context
     else
-      save_context :resolve_captcha
+      save_referrer
       send_captcha
     end
   end
@@ -57,16 +58,16 @@ class WebhookController < Telegram::Bot::UpdatesController
   def keyboard!(value = nil, *)
     case value
     when /история/i
-      respond :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Наша История'
+      respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Наша История'
     when /настройки/i
-      respond :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Настройки'
+      respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Настройки'
     when /ссылки/i
-      respond :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Cсылки'
+      respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Cсылки'
     when /faq/i
-      respond :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'FAQ'
+      respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'FAQ'
     when /roadmap/i
     when /minter/i
-      respond :message, text: "Бот для минта\n\n@minter111_bot"
+      respond_with_keyboard :message, text: "Бот для минта\n\n@minter111_bot"
     else
     end
   ensure
@@ -77,11 +78,11 @@ class WebhookController < Telegram::Bot::UpdatesController
     save_context :keyboard!
   end
 
-  def send_captcha(response_answer = nil, *)
+  def send_captcha(_message = nil, *)
     equation, answer = CaptchaService.captcha
     session[:captcha] = { equation: equation, answer: answer, resolved: false}
     save_context :resolve_captcha
-    respond :message, text: "Для начала решите уравнение #{equation}"
+    respond_with :message, text: "Для начала реши уравнение #{equation}"
   end
 
   def resolve_captcha(answer = nil, *)
@@ -89,22 +90,23 @@ class WebhookController < Telegram::Bot::UpdatesController
     if result
       save_keyboard_context
       session[:captcha][:resolved] = true
-      respond :message, text: 'Отлично, стартуем!'
+      create_user
+      respond_with_keyboard :message, text: 'Отлично, стартуем!'
 
       return
     end
 
-    respond :message, text: 'Неверно ;) пробуй еще раз!'
+    respond_with :message, text: 'Неверно ;) попробуй еще раз!'
     send_captcha
   end
 
   private
 
-  def captcha_resolved?
-    session[:captcha].try(:[], :resolved)
+  def registered?
+    current_user.present? || session[:captcha].try(:[], :resolved)
   end
 
-  def respond(*args, **kws)
+  def respond_with_keyboard(*args, **kws)
     respond_with *args, kws.merge(reply_markup: main_menu)
   end
 
