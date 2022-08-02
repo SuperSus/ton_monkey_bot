@@ -28,7 +28,8 @@ class WebhookController < Telegram::Bot::UpdatesController
     references: "Ссылки #{ICONS[:link_arrow]}",
     faq:        "FAQ #{ICONS[:instruction]}",
     roadmap:    "Roadmap #{ICONS[:map]}",
-    minter:     "Minter #{ICONS[:credit_card]}"
+    minter:     "Minter #{ICONS[:credit_card]}",
+    airdrop:   "Airdrop #{ICONS[:check]}"
   }
 
   use_session!
@@ -68,6 +69,16 @@ class WebhookController < Telegram::Bot::UpdatesController
     when /roadmap/i
     when /minter/i
       respond_with_keyboard :message, text: "Бот для минта\n\n@minter111_bot"
+    when /airdrop/i
+      respond_with_keyboard :message, parse_mode: 'html', text: <<~MSG
+        🔥 Условия участия в рандомном аирдропе (по 1 на кошелек):
+        1. Подписаться на канал <a href="https://t.me/+WB0jTKaj22w1MzYy">TON Monkey Business</a>;
+        3. Пригласить 1 друга по реферальной ссылке
+        
+        👥 Количество ваших рефералов: #{current_user.referrals_count}.
+        🔗 Ваша ссылка для приглашения друзей:
+        https://t.me/#{Rails.env.development? ? 'ton_monkey_dev_bot' : 'ton_monkey_bot' }?start=#{current_user.telegram_id}
+      MSG
     else
     end
   ensure
@@ -117,7 +128,8 @@ class WebhookController < Telegram::Bot::UpdatesController
       [
         { text: MAIN_MENU[:faq], web_app: { url: 'https://supersus.github.io/monkey_bot_faq/' } },
         { text: MAIN_MENU[:roadmap], web_app: { url: 'https://monkeybusiness.yummiwannaplay.com/roadmap' } }
-      ]
+      ],
+      [MAIN_MENU[:airdrop]]
     ]
     {
       keyboard: buttons,
