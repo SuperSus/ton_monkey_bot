@@ -4,6 +4,10 @@ class User < ApplicationRecord
   validates :telegram_id, presence: :true
   validate :validate_referrer
 
+  def referrals_count
+    User.where(referrer_id: id).count
+  end
+
   private
 
   def validate_referrer
