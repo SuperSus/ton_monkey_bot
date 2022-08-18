@@ -231,6 +231,10 @@ GEM
     stimulus-rails (1.0.4)
       railties (>= 6.0.0)
     strscan (3.0.3)
+    tailwindcss-rails (2.0.12-x86_64-darwin)
+      railties (>= 6.0.0)
+    tailwindcss-rails (2.0.12-x86_64-linux)
+      railties (>= 6.0.0)
     telegram-bot (0.15.6)
       actionpack (>= 4.0, < 7.1)
       activesupport (>= 4.0, < 7.1)
@@ -282,6 +286,7 @@ DEPENDENCIES
   spring-commands-rspec
   sprockets-rails
   stimulus-rails
+  tailwindcss-rails (~> 2.0)
   telegram-bot (>= 0.14)
   turbo-rails
   tzinfo-data

@@ -34,3 +34,5 @@
 
 /config/credentials/production.key
 do_user_data.sh
+/app/assets/builds/*
+!/app/assets/builds/.keep
