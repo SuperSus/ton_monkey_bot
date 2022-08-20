@@ -1,0 +1,13 @@
+{
+  "name": "ton_monkey_bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "engines": {
+    "node": "17.x"
+  },
+  "dependencies": {
+    "tonweb": "^0.0.54",
+    "tonweb-mnemonic": "^1.0.1"
+  }
+}
