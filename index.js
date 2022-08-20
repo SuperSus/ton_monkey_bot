@@ -2,6 +2,8 @@ const tonMnemonic = require("tonweb-mnemonic");
 const TonWeb = require("tonweb");
 
 async function main() {
+  const args = process.argv.slice(2);
+  console.log(args);
   // mnemonic to key pair
   const mnemonic = "rail sound peasant garment bounce trigger true abuse arctic gravity ribbon ocean absurd okay blue remove neck cash reflect sleep hen portion gossip arrow";
   const mnemonicArray = mnemonic.split(" ");
