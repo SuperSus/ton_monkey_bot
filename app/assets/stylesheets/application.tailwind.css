@@ -11,3 +11,20 @@
 }
 
 */
+@font-face {
+    font-family: 'Press Start 2P';
+    font-style: normal;
+    font-weight: 400;
+    src: url('press-start-2p-v14-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local(''),
+    url('press-start-2p-v14-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('press-start-2p-v14-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+    url('press-start-2p-v14-latin-regular.woff') format('woff'), /* Modern Browsers */
+    url('press-start-2p-v14-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+    url('press-start-2p-v14-latin-regular.svg#PressStart2P') format('svg'); /* Legacy iOS */
+}
+
+body {
+    background-color: #F2F0EB;
+    font-family: "Press Start 2P";
+}
