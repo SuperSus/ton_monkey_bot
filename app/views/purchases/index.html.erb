@@ -1,0 +1,45 @@
+<div class="flex flex-col bg-white/[0.8] p-6 m-6 max-w-md mx-auto xs:mx-6">
+  <p class="text-center text-sm mb-4">
+    Привет! C нами ты можешь продать мать за смешные картинки!
+    Уникальная коллекция для членов нашего канала.
+  </p>
+  <img class="max-w-xs'" src="<%= image_url('nft_sample.png') %>"/>
+  <%= turbo_frame_tag 'purchase' do %>
+    <div class="grid grid-cols-2 gap-2 mt-4">
+      <div class="relative">
+        <img src=<%=image_path('button.png') %> />
+        <div class="absolute-center">
+          <p><%= Purchase.nft_price %><sub>TON</sub></p>
+          <p class="text-xxs">Цена одного NFT</p>
+        </div>
+      </div>
+      <div class="relative">
+        <img src=<%=image_path('button.png') %> />
+        <div class="absolute-center">
+          <p><%= Purchase.max_per_user_nft_count %><sub>ШТ</sub></p>
+          <p class="text-xxs">В одни руки</p>
+        </div>
+      </div>
+      <div class="relative">
+        <img src=<%=image_path('button.png') %> />
+        <div class="absolute-center">
+          <p><%= Purchase.available_nft_count %><sub>TON</sub></p>
+          <p class="text-xxs">Осталось</p>
+        </div>
+      </div>
+      <div class="relative">
+        <img src=<%=image_path('button.png') %> />
+        <div class="absolute-center">
+          <p><%= Purchase.total_nft_count %><sub>ШТ</sub></p>
+          <p class="text-xxs">Всего на сайте</p>
+        </div>
+      </div>
+    </div>
+    <div class="relative mt-4">
+      <img src=<%=image_path('primary_button.png') %> />
+      <div class="absolute-center">
+        <%= link_to('купить', new_purchase_path(telegram_id: @user&.telegram_id)) %>
+      </div>
+    </div>
+  <% end %>
+</div>
