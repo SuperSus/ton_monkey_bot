@@ -49,7 +49,7 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
-
+gem 'posix-spawn', '~> 0.3.11'
 gem "telegram-bot", ">= 0.14"
 
 group :development, :test do
