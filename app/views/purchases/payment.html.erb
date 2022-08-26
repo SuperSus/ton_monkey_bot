@@ -1,0 +1,6 @@
+<%= turbo_frame_tag 'purchase' do %>
+  <h1>PAYMENT</h1>
+  <div><%= @purchase.comment %></div>
+  <div><%= @purchase.price %></div>
+  <a href="<%= @purchase.tonkeeper_payment_link %>" >tonkeeper</a>
+<% end %>
