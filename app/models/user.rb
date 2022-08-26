@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :purchases
   belongs_to :referrer, optional: true, class_name: 'User'
 
   validates :telegram_id, presence: :true

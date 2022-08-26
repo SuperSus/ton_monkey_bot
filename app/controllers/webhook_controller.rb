@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class WebhookController < Telegram::Bot::UpdatesController
+  include Rails.application.routes.url_helpers
   include Telegram::Bot::UpdatesController::MessageContext
   include Telegram::Bot::UpdatesController::CallbackQueryContext
   include Telegram::Bot::UpdatesController::Session
@@ -29,7 +30,8 @@ class WebhookController < Telegram::Bot::UpdatesController
     faq:        "FAQ #{ICONS[:instruction]}",
     roadmap:    "Roadmap #{ICONS[:map]}",
     minter:     "Minter #{ICONS[:credit_card]}",
-    airdrop:   "Airdrop #{ICONS[:check]}"
+    airdrop:   "Airdrop #{ICONS[:check]}",
+    buy_nft:   "Купить NFT"
   }
 
   use_session!
@@ -60,15 +62,12 @@ class WebhookController < Telegram::Bot::UpdatesController
     case value
     when /история/i
       respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Наша История'
-    when /настройки/i
-      respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Настройки'
     when /ссылки/i
       respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'Cсылки'
     when /faq/i
       respond_with_keyboard :photo, photo: File.open(Rails.root.join('lol.webp').to_s), caption: 'FAQ'
     when /roadmap/i
-    when /minter/i
-      respond_with_keyboard :message, text: "Бот для минта\n\n@minter111_bot"
+    when /купить nft/i
     when /airdrop/i
       respond_with_keyboard :message, parse_mode: 'html', text: <<~MSG
         🔥 Условия участия в рандомном аирдропе (по 1 на кошелек):
@@ -124,12 +123,12 @@ class WebhookController < Telegram::Bot::UpdatesController
   def main_menu
     buttons = [
       [MAIN_MENU[:history], MAIN_MENU[:references]],
-      [ MAIN_MENU[:settings], MAIN_MENU[:minter] ],
       [
         { text: MAIN_MENU[:faq], web_app: { url: 'https://supersus.github.io/monkey_bot_faq/' } },
         { text: MAIN_MENU[:roadmap], web_app: { url: 'https://monkeybusiness.yummiwannaplay.com/roadmap' } }
       ],
-      [MAIN_MENU[:airdrop]]
+      [MAIN_MENU[:airdrop]],
+      [{ text: MAIN_MENU[:buy_nft], web_app: { url: purchases_url(telegram_id: current_user.telegram_id) } }],
     ]
     {
       keyboard: buttons,
