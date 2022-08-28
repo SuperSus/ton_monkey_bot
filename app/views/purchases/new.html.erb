@@ -1,5 +1,5 @@
 <%= turbo_frame_tag 'purchase' do %>
-  <div class="form-control w-full max-w-md p-8" id="purchase-form">
+  <div class="form-control w-full max-w-full p-8" id="purchase-form">
     <%= render partial: "form", locals: { purchase: @purchase } %>
   </div>
 <% end %>

@@ -1,10 +1,10 @@
 <div class="flex flex-col bg-white/[0.8] p-6 m-6 max-w-md mx-auto xs:mx-6">
-  <p class="text-center text-sm mb-4">
-    Привет! C нами ты можешь продать мать за смешные картинки!
-    Уникальная коллекция для членов нашего канала.
-  </p>
-  <img class="max-w-xs'" src="<%= image_url('nft_sample.png') %>"/>
   <%= turbo_frame_tag 'purchase' do %>
+    <p class="text-center text-sm mb-4">
+      Привет! C нами ты можешь продать мать за смешные картинки!
+      Уникальная коллекция для членов нашего канала.
+    </p>
+    <img class="max-w-xs'" src="<%= image_url('nft_sample.png') %>"/>
     <div class="grid grid-cols-2 gap-2 mt-4">
       <div class="relative">
         <img src=<%=image_path('button.png') %> />

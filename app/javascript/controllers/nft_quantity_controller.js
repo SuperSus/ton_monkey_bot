@@ -1,20 +1,32 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "counter" ]
+  static targets = [ "counter", "totalPrice" ]
+  static values = { price: Number }
+
+  initialize() {
+    console.log(this.priceValue)
+  }
 
   add () {
-    this.counter.value = parseInt(this.counter.value) + 1
+    this.counterTarget.value = this.counter + 1
+    this.updatePrice()
   }
 
   remove () {
-    let newValue = parseInt(this.counter.value) - 1
+    let newValue = this.counter - 1
     newValue = newValue < 0 ? 0 : newValue
 
-    this.counter.value = newValue
+    this.counterTarget.value = newValue
+    this.updatePrice()
+  }
+
+  updatePrice () {
+    // this.totalTarget.hidden = true
+    this.totalPriceTarget.innerHTML = this.priceValue * this.counter
   }
 
   get counter() {
-    return this.counterTarget
+    return parseInt(this.counterTarget.value)
   }
 }
