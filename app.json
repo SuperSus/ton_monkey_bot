@@ -1,0 +1,8 @@
+{
+  "cron": [
+    {
+      "command": "bundle exec rake ton_wallet:complete_purchases",
+      "schedule": "* * * * *"
+    }
+  ]
+}

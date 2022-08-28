@@ -23,7 +23,7 @@ class Purchase < ApplicationRecord
     end
 
     def wallet_address
-      'EQBXzXqo1PUb6dScSObhnLaU-9x6p0v_We7Aei9xfUaBxfzB'
+      Rails.application.credentials[:wallet_address]
     end
   end
 

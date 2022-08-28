@@ -1,11 +1,10 @@
 const TonWeb = require("tonweb");
 
 async function main() {
-  const args = process.argv.slice(2);
-  console.log(args);
-
+  const [addressStr] = process.argv.slice(2);
+  const address = new TonWeb.utils.Address(addressStr)
   const tonweb = new TonWeb(new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC"));
-  const address = new TonWeb.utils.Address('EQBXzXqo1PUb6dScSObhnLaU-9x6p0v_We7Aei9xfUaBxfzB')
+
   const transactions = await tonweb.getTransactions(address);
   result = transactions.map((tx) => {
     const msgObject = tx.in_msg;
@@ -19,7 +18,3 @@ async function main() {
 }
 
 main();
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
