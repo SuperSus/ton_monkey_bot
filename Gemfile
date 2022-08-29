@@ -51,6 +51,7 @@ gem "bootsnap", require: false
 # gem "image_processing", "~> 1.2"
 gem 'posix-spawn', '~> 0.3.11'
 gem "telegram-bot", ">= 0.14"
+gem "honeybadger", "~> 4.0"
 
 group :development, :test do
   gem "rspec-rails"
