@@ -33,7 +33,7 @@ class CompletePurchasesService
 
   def node_process
     @node_process ||=
-      POSIX::Spawn::Child.build('node', 'get_wallet_transactions.js', Rails.application.credentials[:wallet_address])
+      POSIX::Spawn::Child.build('node', 'get_wallet_transactions.js', Rails.application.credentials[:wallet_address], Rails.application.credentials[:tonweb_api_key])
   end
 
   def notify_user(purchase)

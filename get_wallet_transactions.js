@@ -1,9 +1,9 @@
 const TonWeb = require("tonweb");
 
 async function main() {
-  const [addressStr] = process.argv.slice(2);
-  const address = new TonWeb.utils.Address(addressStr)
-  const tonweb = new TonWeb(new TonWeb.HttpProvider("https://toncenter.com/api/v2/jsonRPC"));
+  const [addressStr, apiKey] = process.argv.slice(2, 4);
+  const address = new TonWeb.utils.Address(addressStr);
+  const tonweb = new TonWeb(new TonWeb.HttpProvider('https://toncenter.com/api/v2/jsonRPC', { apiKey: apiKey }));
 
   const transactions = await tonweb.getTransactions(address);
   result = transactions.map((tx) => {
