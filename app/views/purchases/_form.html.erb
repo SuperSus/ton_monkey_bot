@@ -1,0 +1,37 @@
+<%= form_for purchase do |f| %>
+  <% if purchase.errors.any? %>
+    <div class="form-errors">
+      <div class="alert shadow-lg alert-error text-red-400 p-4">
+        Что-то пошло не так: <%= purchase.errors.full_messages.to_sentence %>
+      </div>
+    </div>
+  <% end %>
+  <div data-controller="nft-quantity" data-nft-quantity-price-value="<%= Purchase::DEFAULT_NFT_PRICE %>">
+    <div class="relative mb-4">
+      <img class="min-w-full" src=<%=image_path('button.png') %> />
+      <div class="absolute-center">
+        <span data-nft-quantity-target="totalPrice" class="text-center text-5xl">0</span>TON
+      </div>
+    </div>
+    <div class="flex max-w-xs">
+      <div data-action="click->nft-quantity#remove">
+        <img src=<%=image_path('minus_quantity_control.png') %> />
+      </div>
+      <div class="relative">
+        <img src=<%=image_path('input_quantity_control.png') %> />
+        <%= f.number_field :quantity, data: { 'nft-quantity-target' => 'counter' }, placeholder: "0", class: "w-full absolute absolute-center max-w-xs text-center text-3xl text-white border-none bg-white/[0.0]", value: "0" %>
+      </div>
+      <div data-action="click->nft-quantity#add">
+        <img src=<%=image_path('plus_quantity_control.png') %> />
+      </div>
+    </div>
+  </div>
+  <%= inline_error_for(:quantity, purchase) %>
+  <%= hidden_field :user, :telegram_id %>
+  <div class="relative mt-4">
+    <img src=<%=image_path('primary_button.png') %> />
+    <div class="absolute-center">
+      <%= f.submit "Оплатить" %>
+    </div>
+  </div>
+<% end %>

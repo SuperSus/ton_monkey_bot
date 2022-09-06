@@ -1,7 +1,7 @@
 {
   "name": "ton_monkey_bot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "get_wallet_transactions.js",
   "license": "MIT",
   "engines": {
     "node": "17.x"

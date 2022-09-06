@@ -1,0 +1,10 @@
+<div data-controller="clipboard" class="flex" >
+  <input
+    data-clipboard-target="source"
+    type="text"
+    value="<%= value %>"
+    readonly
+    class="border-none rounded-lg max-w-[80%] mr-2"
+  >
+  <button data-action="click->clipboard#copy" class="btn-primary">&#128203</button>
+</div>

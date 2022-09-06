@@ -9,9 +9,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        'smm': '.8rem',
+        'xxs': '.5rem',
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        'xs': {'min': '340px', 'max': '767px'},
+      }
     },
   },
   plugins: [

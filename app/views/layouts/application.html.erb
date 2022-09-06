@@ -12,8 +12,27 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
+    <main class="min-h-screen justify-center mx-auto flex">
+      <div class="flex flex-col overflow-hidden bg-no-repeat bg-cover bg-center bg-[url('bg.gif')] min-w-full">
+        <header class="flex flex-row justify-between py-4 bg-white/[0.8]">
+          <div class="flex divide-x ml-2">
+            <img src="<%=image_path('tmb_logo.png')%>" alt=""/>
+            <div class="bg-black w-1 ml-2"></div>
+            <div class="flex flex-col ml-2">
+              <span class="text-smm">TON</span>
+              <span class="text-smm">MONKEY</span>
+              <span class="text-smm">BUSINESS</span>
+            </div>
+          </div>
+          <div class="flex align-center justify-center mr-4 pt-3">
+            <span class="inline-block align-baseline text-2xl font-bold text-center">NFT</span>
+          </div>
+        </header>
+<!--        <div id="flash" class="flash">-->
+          <%#= render partial: "shared/flash" %>
+<!--        </div>-->
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>

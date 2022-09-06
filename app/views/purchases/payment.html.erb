@@ -1,0 +1,21 @@
+<%= turbo_frame_tag 'purchase' do %>
+  <div data-controller="clipboard" class="p-4">
+    <p>Арес Кошелька:</p>
+    <%= render('copy_input', value: Purchase.wallet_address) %>
+  </div>
+  <div data-controller="clipboard" class="p-4">
+    <p>Комментарий:</p>
+    <%= render('copy_input', value: @purchase.comment) %>
+  </div>
+  <div data-controller="clipboard" class="p-4">
+    <p>TON Nanocoins:</p>
+    <%= render('copy_input', value: @purchase.nanocoins_price) %>
+  </div>
+
+  <div class="relative mt-4">
+    <img src=<%=image_path('primary_button.png') %> />
+    <div class="absolute-center">
+      <a href="<%= @purchase.tonkeeper_payment_link %>">tonkeeper</a>
+    </div>
+  </div>
+<% end %>
