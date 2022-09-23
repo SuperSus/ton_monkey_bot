@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
   include ActionView::RecordIdentifier
-  before_action :find_user, only: [:new, :index]
-  before_action :find_purchase, only: [:payment]
+  before_action :find_user, only: [:new, :index, :create]
+  before_action :find_purchase, only: [:payment, :check]
 
   def index
   end
@@ -11,9 +11,6 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    # there is js poller - gets qll wallets transactions + comments -> decrypt comment - purchase_id.complete! -> нотификашка продаоно! апдейтим каунт сколько осталось турбостримы
-
-    @user = User.find_by(telegram_id: params.dig(:user, :telegram_id))
     @purchase = @user.purchases.new(purchase_params)
 
     if @purchase.save
@@ -27,6 +24,17 @@ class PurchasesController < ApplicationController
   def payment
   end
 
+  def check
+    CompletePurchasesService.call
+
+    if Purchase.completed.find_by(comment: @purchase.comment)
+      flash[:notice] = "Purchase confirmed"
+      redirect_to payment_purchase_path(@purchase)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def purchase_params
@@ -38,6 +46,8 @@ class PurchasesController < ApplicationController
   end
 
   def find_user
-    @user = User.find_by(telegram_id: params[:telegram_id])
+    return @user = User.first if Rails.env.development?
+
+    @user = User.find_by(telegram_id: params[:telegram_id] || params.dig(:user, :telegram_id))
   end
 end
