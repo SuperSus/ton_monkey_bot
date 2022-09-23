@@ -1,0 +1,13 @@
+<%= form_for purchase do |f| %>
+  <div data-controller="nft-quantity" data-nft-quantity-price-value="<%= Purchase::DEFAULT_NFT_PRICE %>">
+    <%= hidden_field :purchase, :quantity, value: quantity %>
+    <%= hidden_field :user, :telegram_id %>
+    <div class="relative">
+      <img src=<%=image_path('button.png') %> />
+      <div class="absolute-center text-center">
+        <p><%= f.submit "Купить #{quantity}" %></p>
+        <p class="text-xs"><%= "за #{Purchase::DEFAULT_NFT_PRICE * quantity} TON" %></p>
+      </div>
+    </div>
+  </div>
+<% end %>
