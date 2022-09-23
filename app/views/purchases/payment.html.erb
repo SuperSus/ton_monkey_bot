@@ -1,21 +1,43 @@
 <%= turbo_frame_tag 'purchase' do %>
-  <div data-controller="clipboard" class="p-4">
-    <p>Арес Кошелька:</p>
-    <%= render('copy_input', value: Purchase.wallet_address) %>
-  </div>
-  <div data-controller="clipboard" class="p-4">
-    <p>Комментарий:</p>
-    <%= render('copy_input', value: @purchase.comment) %>
-  </div>
-  <div data-controller="clipboard" class="p-4">
-    <p>TON Nanocoins:</p>
-    <%= render('copy_input', value: @purchase.nanocoins_price) %>
-  </div>
-
-  <div class="relative mt-4">
-    <img src=<%=image_path('primary_button.png') %> />
-    <div class="absolute-center">
-      <a href="<%= @purchase.tonkeeper_payment_link %>">tonkeeper</a>
+  <% if @purchase.completed?%>
+    <div class="relative my-24">
+      <img src=<%=image_path('thanks_for_buy.png') %> />
     </div>
-  </div>
+  <% else %>
+    <div data-controller="payment" class="flex flex-col">
+      <div class="relative mt-4" data-payment-target="paymentButton">
+        <img src=<%=image_path('primary_button.png') %> />
+        <div class="absolute-center">
+          <a data-action="payment#showConfirmation" href="<%= @purchase.tonkeeper_payment_link%>">tonkeeper</a>
+        </div>
+      </div>
+      <div class="relative mt-4" data-payment-target="paymentButton">
+        <img src=<%=image_path('primary_button.png') %> />
+        <div class="absolute-center">
+          <a data-action="payment#showConfirmation" href="<%= @purchase.tonhub_payment_link%>">tonhub</a>
+        </div>
+      </div>
+      <div class="relative mt-20 hidden" data-payment-target="confirmBlock">
+        <img src=<%=image_path('primary_button.png') %> />
+        <div class="absolute-center">
+          <%= button_to('Я оплатил', check_purchase_path(@purchase)) %>
+        </div>
+      </div>
+      <div class="relative mt-8">
+        <img src=<%=image_path('lets_make_a_deal.png') %> />
+      </div>
+    </div>
+  <% end %>
+<!--  <div data-controller="clipboard" class="p-4">-->
+<!--    <p>Арес Кошелька:</p>-->
+    <%#= render('copy_input', value: Purchase.wallet_address) %>
+<!--  </div>-->
+<!--  <div data-controller="clipboard" class="p-4">-->
+<!--    <p>Комментарий:</p>-->
+    <%#= render('copy_input', value: @purchase.comment) %>
+<!--  </div>-->
+<!--  <div data-controller="clipboard" class="p-4">-->
+<!--    <p>TON Nanocoins:</p>-->
+    <%#= render('copy_input', value: @purchase.nanocoins_price) %>
+<!--  </div>-->
 <% end %>
