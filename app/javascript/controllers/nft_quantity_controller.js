@@ -4,10 +4,6 @@ export default class extends Controller {
   static targets = [ "counter", "totalPrice" ]
   static values = { price: Number }
 
-  initialize() {
-    console.log(this.priceValue)
-  }
-
   add () {
     this.counterTarget.value = this.counter + 1
     this.updatePrice()

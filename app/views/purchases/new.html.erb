@@ -1,5 +1,11 @@
 <%= turbo_frame_tag 'purchase' do %>
-  <div class="form-control w-full max-w-full p-8" id="purchase-form">
+  <div class="grid grid-cols-2 gap-2 mt-4 max-w-md">
+    <%= render partial: "preset_form", locals: { purchase: @purchase, quantity: 5 } %>
+    <%= render partial: "preset_form", locals: { purchase: @purchase, quantity: 7 } %>
+    <%= render partial: "preset_form", locals: { purchase: @purchase, quantity: 10 } %>
+    <%= render partial: "preset_form", locals: { purchase: @purchase, quantity: 15 } %>
+  </div>
+  <div class="form-control w-full max-w-full p-8 mt-4" id="purchase-form">
     <%= render partial: "form", locals: { purchase: @purchase } %>
   </div>
 <% end %>
