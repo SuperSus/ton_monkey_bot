@@ -40,11 +40,15 @@ class Purchase < ApplicationRecord
   validates :price, presence: true, numericality: { greater_than: 0 }
   validates :quantity, numericality: { greater_than: 0, less_than: MAX_PER_USER_NFT_COUNT }
 
-  def check_payment(nanocoins:, comment:)
-    valid_amount = (nanocoins_price - nanocoins.to_i).abs <= PRECISION_IN_NANOCOINS
-    valid_comment = self.comment == comment.strip
+  def process_payment(nanocoins:, wallet_address:)
+    return if nanocoins.nil? || nanocoins.zero?
 
-    valid_amount && valid_comment
+    quantity = nanocoins / (NANOCOINS_IN_TON * DEFAULT_NFT_PRICE)
+    self.quantity = quantity
+    self.status = 'completed'
+    self.wallet_address = wallet_address
+
+    save
   end
 
   def nanocoins_price
@@ -53,6 +57,10 @@ class Purchase < ApplicationRecord
 
   def tonkeeper_payment_link
     "https://app.tonkeeper.com/transfer/#{wallet_address}?amount=#{nanocoins_price}&text=#{comment}"
+  end
+
+  def tonhub_payment_link
+    "https://tonhub.com/transfer/#{wallet_address}?amount=#{nanocoins_price}&text=#{comment}"
   end
 
   private
