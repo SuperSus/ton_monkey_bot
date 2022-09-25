@@ -40,3 +40,6 @@ do_user_data.sh
 /node_modules
 
 .idea/
+
+.env
+nfts.csv
