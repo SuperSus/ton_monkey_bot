@@ -23,7 +23,11 @@ class Purchase < ApplicationRecord
     end
 
     def wallet_address
-      Rails.application.credentials[:wallet_address]
+      @wallet_address ||= Nft::ConfigService.new[:wallet_address]
+    end
+
+    def nft_count(nanocoins_amount)
+      (nanocoins_amount / (NANOCOINS_IN_TON * DEFAULT_NFT_PRICE)).to_i
     end
   end
 
@@ -31,7 +35,7 @@ class Purchase < ApplicationRecord
 
   belongs_to :user
 
-  enum status: { uncompleted: 'uncompleted' , completed: 'completed' }, _default: "uncompleted"
+  enum status: { uncompleted: 'uncompleted' , completed: 'completed', minted: 'minted' }, _default: "uncompleted"
 
   before_validation :set_comment
   before_validation :set_price
@@ -43,7 +47,7 @@ class Purchase < ApplicationRecord
   def process_payment(nanocoins:, wallet_address:)
     return if nanocoins.nil? || nanocoins.zero?
 
-    quantity = nanocoins / (NANOCOINS_IN_TON * DEFAULT_NFT_PRICE)
+    quantity = self.class.nft_count(nanocoins)
     self.quantity = quantity
     self.status = 'completed'
     self.wallet_address = wallet_address
