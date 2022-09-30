@@ -14,8 +14,10 @@ class PurchasesController < ApplicationController
     @purchase = @user.purchases.new(purchase_params)
 
     if @purchase.save
-      flash[:notice] = "Purchase created"
-      redirect_to payment_purchase_path(@purchase)
+      respond_to do |format|
+        format.html { redirect_to payment_purchase_path(@purchase) }
+        format.turbo_stream
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,12 +28,15 @@ class PurchasesController < ApplicationController
 
   def check
     CompletePurchasesService.call
-
-    if Purchase.completed.find_by(comment: @purchase.comment)
-      flash[:notice] = "Purchase confirmed"
-      redirect_to payment_purchase_path(@purchase)
+    @tried = true
+    if Purchase.find_by(comment: @purchase.comment)
+      notice = @purchase.completed? ? "Спасибо за покупку!" : "Проверь еще раз!"
+      respond_to do |format|
+        format.html { redirect_to payment_purchase_path(@purchase), notice: notice }
+        format.turbo_stream { flash.now[:notice] = notice }
+      end
     else
-      render :new, status: :unprocessable_entity
+      render :payment, status: :unprocessable_entity
     end
   end
 

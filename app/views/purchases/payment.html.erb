@@ -1,32 +1,8 @@
 <%= turbo_frame_tag 'purchase' do %>
-  <% if @purchase.completed?%>
-    <div class="relative my-24">
-      <img src=<%=image_path('thanks_for_buy.png') %> />
-    </div>
+  <% if @purchase.completed? %>
+    <%= render 'success' %>
   <% else %>
-    <div data-controller="payment" class="flex flex-col">
-      <div class="relative mt-4" data-payment-target="paymentButton">
-        <img src=<%=image_path('primary_button.png') %> />
-        <div class="absolute-center">
-          <a data-action="payment#showConfirmation" href="<%= @purchase.tonkeeper_payment_link%>">tonkeeper</a>
-        </div>
-      </div>
-      <div class="relative mt-4" data-payment-target="paymentButton">
-        <img src=<%=image_path('primary_button.png') %> />
-        <div class="absolute-center">
-          <a data-action="payment#showConfirmation" href="<%= @purchase.tonhub_payment_link%>">tonhub</a>
-        </div>
-      </div>
-      <div class="relative mt-20 hidden" data-payment-target="confirmBlock">
-        <img src=<%=image_path('primary_button.png') %> />
-        <div class="absolute-center">
-          <%= button_to('Я оплатил', check_purchase_path(@purchase)) %>
-        </div>
-      </div>
-      <div class="relative mt-8">
-        <img src=<%=image_path('lets_make_a_deal.png') %> />
-      </div>
-    </div>
+    <%= render 'payment_form' %>
   <% end %>
 <!--  <div data-controller="clipboard" class="p-4">-->
 <!--    <p>Арес Кошелька:</p>-->

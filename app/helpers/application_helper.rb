@@ -10,4 +10,12 @@ module ApplicationHelper
 
     html.join.html_safe
   end
+
+  def render_turbo_stream_flash_messages
+    turbo_stream.prepend "flash", partial: "layouts/flash"
+  end
+
+  def render_payment_page
+    turbo_stream.replace 'purchase', partial: @purchase&.completed? ? 'success' : 'payment_form'
+  end
 end
