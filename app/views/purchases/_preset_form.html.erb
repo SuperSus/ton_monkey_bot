@@ -5,7 +5,7 @@
     <div class="relative">
       <img src=<%=image_path('button.png') %> />
       <div class="absolute-center text-center">
-        <p><%= f.submit "Купить #{quantity}" %></p>
+        <p class="text-sm md:text-md lg:text-lg"><%= f.submit "Купить #{quantity}" %></p>
         <p class="text-xs"><%= "за #{Purchase::DEFAULT_NFT_PRICE * quantity} TON" %></p>
       </div>
     </div>
