@@ -1,0 +1,25 @@
+<%= turbo_frame_tag 'purchase' do %>
+  <div data-controller="payment" class="flex flex-col">
+    <div class="relative mt-4 <%= "hidden" if @tried %>" data-payment-target="paymentButton">
+      <img src=<%=image_path('primary_button.png') %> />
+      <div class="absolute-center">
+        <a data-action="payment#showConfirmation" href="<%= @purchase.tonkeeper_payment_link%>">tonkeeper</a>
+      </div>
+    </div>
+    <div class="relative mt-4 <%= "hidden" if @tried %>" data-payment-target="paymentButton">
+      <img src=<%=image_path('primary_button.png') %> />
+      <div class="absolute-center">
+        <a data-action="payment#showConfirmation" href="<%= @purchase.tonhub_payment_link%>">tonhub</a>
+      </div>
+    </div>
+    <div class="relative mt-20 <%= "hidden" unless @tried %>" data-payment-target="confirmBlock">
+      <img src=<%=image_path('primary_button.png') %> />
+      <div class="absolute-center">
+        <%= button_to('Я оплатил', check_purchase_path(@purchase)) %>
+      </div>
+    </div>
+    <div class="relative mt-8">
+      <img src=<%=image_path('lets_make_a_deal.png') %> />
+    </div>
+  </div>
+<% end %>
